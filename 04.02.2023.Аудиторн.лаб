@@ -1,0 +1,154 @@
+using System;
+class Student
+{
+    public string fio { get; set; }
+    public int day { get; set; }
+    public int month { get; set; }
+    public int year { get; set; }
+    public string group { get; set; }
+    public int[] pr_o { get; set; }
+    static Student Print()
+    {
+        Student n = new Student();
+        Console.WriteLine("Введите ФИО студента: ");
+        n.fio = Console.ReadLine();
+        Console.WriteLine("Введите день рождения: ");
+        n.day = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите месяц рождения: ");
+        n.month = int.Parse(Console.ReadLine());
+        Console.WriteLine("Введите год рождения: ");
+        n.year = int.Parse(Console.ReadLine());
+        Console.WriteLine("Дата рождения: ");
+        Console.WriteLine("{0}.{1}.{2}", n.day, n.month, n.year);
+        Console.WriteLine("Введите группу в которой обучается студент: ");
+        n.group = Console.ReadLine();
+        n.pr_o = new int[4];
+        Console.WriteLine("Введите оценку, полученную за предмет.Если оценки нет (не выставлена), введите: 0 ");
+        for (int i = 0; i < 4; i++)
+        {
+            Console.Write("предмет №{0} = ", i + 1); n.pr_o[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        Console.WriteLine("Нажмите любую клавишу для продолжения");
+        Console.ReadKey();
+        Console.Clear();
+        return n;
+    }
+    static void Menu(Student[] mass)
+    {
+        Console.Clear();
+        Console.WriteLine(" Меню: ");
+        Console.WriteLine("1.Выдать студентов, которые учатся в заданной группе: ");
+        Console.WriteLine("2.Выдать студентов должников: ");
+        Console.WriteLine("3.Выдать студентов отличников: ");
+        Console.WriteLine("4.Выдать студентов моложе 20 лет: ");
+        Console.WriteLine("5.Выход");
+        string nomer = Console.ReadLine();
+        switch (Convert.ToInt32(nomer))
+        {
+            case 1:
+                int odin = 0;
+                Console.WriteLine("Введите группу, студентов которой нужно найти: ");
+                string group = Console.ReadLine();
+                foreach (Student n in mass)
+                {
+                    if (n.group == group)
+                    {
+                        odin++;
+                        Console.WriteLine(n.fio);
+                    }
+                }
+                if (odin == 0)
+                {
+                    Console.WriteLine("Информация о данной группе отсутствует: ");
+                }
+                Console.WriteLine("Нажмите любую клавишу для продолжения");
+                Console.ReadKey();
+                Menu(mass);
+                break;
+            case 2:
+                int dva = 0;
+                foreach (Student n in mass)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if ((n.pr_o[i] == 0) || (n.pr_o[i] == 1) || (n.pr_o[i] == 2))
+                        {
+                            Console.WriteLine(n.fio);
+                            dva++;
+                            break;
+                        }
+                    }
+                }
+                if (dva == 0)
+                {
+                    Console.WriteLine("Нет студентов с задолжностями");
+                }
+                Console.WriteLine("Нажмите любую клавишу для продолжения");
+                Console.ReadKey();
+                Menu(mass);
+                break;
+            case 3:
+                int tri = 0;
+                foreach (Student n in mass)
+                {
+                    int t = 0;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (n.pr_o[i] == 5)
+                        {
+                            t++;
+                        }
+                    }
+                    if (t == 4)
+                    {
+                        tri++;
+                        Console.WriteLine(n.fio);
+                    }
+                }
+                if (tri == 0)
+                {
+                    Console.WriteLine("Нет студентов-отличников");
+                }
+                Console.WriteLine("Нажмите любую клавишу для продолжения");
+                Console.ReadKey();
+                Menu(mass);
+                break;
+            case 4:
+                int chet = 0;
+                foreach (Student n in mass)
+                {
+                    if ((2023 - n.year) * 365 + n.month * 31 + n.day < 20 * 365)
+                    {
+                        chet++;
+                        Console.WriteLine(n.fio);
+                    }
+                }
+                if (chet == 0)
+                {
+                    Console.WriteLine("Нет студентов младше 20");
+                }
+                Console.WriteLine("Нажмите любую клавишу для продолжения");
+                Console.ReadKey();
+                Menu(mass);
+                break;
+            case 5:
+                break;
+            default:
+                Console.WriteLine("Закрыть программу");
+                break;
+        }
+    }
+    static void Main()
+    {
+        Console.WriteLine("Введите количество студентов: ");
+        int c = Convert.ToInt32(Console.ReadLine());
+        Console.Clear();
+        Student[] mass = new Student[c];
+        for (int i = 0; i < c; i++)
+        {
+            mass[i] = Print();
+        }
+        Menu(mass);
+    }
+}
+
