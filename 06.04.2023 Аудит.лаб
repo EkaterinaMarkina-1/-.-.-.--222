@@ -1,0 +1,90 @@
+using System;
+
+delegate double MathOp(double x, double y); 
+
+interface IMath 
+{
+    double Add(double x, double y);
+    double Subtract(double x, double y);
+    double Multiply(double x, double y);
+    double Divide(double x, double y);
+}
+
+class MathOperations : IMath 
+{
+    public double Add(double x, double y)
+    {
+        return x + y;
+    }
+    public double Subtract(double x, double y)
+    {
+        return x - y;
+    }
+    public double Multiply(double x, double y)
+    {
+        return x * y;
+    }
+    public double Divide(double x, double y)
+    {
+        if (y == 0) 
+        {
+            Console.WriteLine("Ошибка: деление на ноль");
+            return 0;
+        }
+        else
+        {
+            return x / y;
+        }
+    }
+}
+class Program
+{
+    static void Main(string[] args)
+    {
+        MathOperations math = new MathOperations(); 
+
+        MathOp add = new MathOp(math.Add); 
+        MathOp subtract = new MathOp(math.Subtract);
+        MathOp multiply = new MathOp(math.Multiply);
+        MathOp divide = new MathOp(math.Divide);
+
+        Console.WriteLine("Выберите операцию:"); 
+        Console.WriteLine("1. Сложение");
+        Console.WriteLine("2. Вычитание");
+        Console.WriteLine("3. Умножение");
+        Console.WriteLine("4. Деление");
+
+        int choice = int.Parse(Console.ReadLine()); 
+
+        Console.WriteLine("Введите первое число:");
+        double num1 = double.Parse(Console.ReadLine()); 
+
+        Console.WriteLine("Введите второе число:");
+        double num2 = double.Parse(Console.ReadLine());
+
+        double result = 0;
+
+        switch (choice)
+        {
+            case 1:
+                result = add(num1, num2);
+                Console.WriteLine("Результат сложения: " + result);
+                break;
+            case 2:
+                result = subtract(num1, num2);
+                Console.WriteLine("Результат вычитания: " + result);
+                break;
+            case 3:
+                result = multiply(num1, num2);
+                Console.WriteLine("Результат умножения: " + result);
+                break;
+            case 4:
+                result = divide(num1, num2);
+                Console.WriteLine("Результат деления: " + result);
+                break;
+            default:
+                Console.WriteLine("Ошибка: неверный выбор операции!");
+                break;
+        }
+    }
+}
