@@ -1,0 +1,155 @@
+using System;
+using System.Collections.Generic;
+
+public class BracketChecker
+{
+    public static bool Scobk(string str)
+    {
+        Stack<char> stack = new Stack<char>();
+        foreach (char c in str)
+        {
+            if (c == '(' || c == '[' || c == '{')
+            {
+                stack.Push(c);
+            }
+            else if (c == ')' || c == ']' || c == '}')
+            {
+                if (stack.Count == 0)
+                {
+                    return false;
+                }
+                char top = stack.Pop();
+                if ((c == ')' && top != '(') || (c == ']' && top != '[') || (c == '}' && top != '{'))
+                {
+                    return false;
+                }
+            }
+        }
+        return stack.Count == 0;
+    }
+    public static void Main()
+    {
+        int ch;
+        Console.WriteLine("Меню : ");
+        Console.WriteLine("1. методы stack");
+        Console.WriteLine("2. рассмотрение скобок");
+        ch = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Введите строку: ");
+        Stack<int> myStack = new Stack<int>();
+        string str = Console.ReadLine();
+        foreach (char c in str)
+        {
+            int num = Convert.ToInt32(char.GetNumericValue(c));
+            myStack.Push(num);
+        }
+        if (ch == 1)
+        {
+            Console.WriteLine("Стек содержит значения: ");
+            foreach (int num in myStack)
+            {
+                Console.Write(num + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine("1. Добавить элемент в стек");
+            Console.WriteLine("2. Удалить верхний элемент из стека");
+            Console.WriteLine("3. Показать верхний элемент в стеке");
+            Console.WriteLine("4. Очистить стек ");
+            Console.WriteLine("5. Проверить, содержится ли элемент в стеке");
+            Console.WriteLine("6. Скопировать элементы стека в массив");
+            Console.WriteLine("7. Выйти");
+
+            Console.WriteLine("Введите номер операции: ");
+            ch = int.Parse(Console.ReadLine());
+            switch (ch)
+            {
+                case 1:
+                    Console.WriteLine("Введите элемент, который нужно добавить в стек: ");
+                    int newI = int.Parse(Console.ReadLine());
+                    myStack.Push(newI);
+                    Console.WriteLine("Содержимое стека:");
+                    foreach (int item in myStack)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    break;
+
+                case 2:
+                    if (myStack.Count > 0)
+                    {
+                        int removedItem = myStack.Pop();
+                        Console.WriteLine("Удаленный элемент: " + removedItem);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Стек пуст");
+                    }
+                    break;
+
+                case 3:
+                    if (myStack.Count > 0)
+                    {
+                        int t_Item = myStack.Peek();
+                        Console.WriteLine("Верхний элемент в стеке: " + t_Item);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Стек пуст");
+                    }
+                    break;
+
+                case 4:
+                    myStack.Clear();
+                    Console.WriteLine("Стек очищен");
+                    break;
+
+                case 5:
+                    Console.WriteLine("Введите элемент, наличие которого нужно проверить: ");
+                    int i_ToCheck = int.Parse(Console.ReadLine());
+
+                    if (myStack.Contains(i_ToCheck))
+                    {
+                        Console.WriteLine("Элемент найден в стеке");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Элемент не найден в стеке");
+                    }
+                    break;
+
+                case 6:
+                    int[] stackArray = myStack.ToArray();
+                    Console.WriteLine("Элементы стека: ");
+
+                    for (int i = 0; i < stackArray.Length; i++)
+                    {
+                        Console.WriteLine(stackArray[i]);
+                    }
+                    break;
+
+                case 7:
+                    return;
+
+                default:
+                    Console.WriteLine("Неправильный ввод!");
+                    break;
+            }
+        }
+        else if (ch == 2)
+        {
+            bool Sc = Scobk(str);
+            if (Sc)
+            {
+                Console.WriteLine("Скобки расставлены правильно");
+            }
+            else
+            {
+                Console.WriteLine("Скобки расставлены неправильно");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Неправильный ввод!");
+        }
+    }
+}
