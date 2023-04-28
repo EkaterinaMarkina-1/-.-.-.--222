@@ -1,0 +1,32 @@
+using System;
+
+delegate double MathOperation(double num1, double num2, double num3);
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите первое число: ");
+        double num1 = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Введите второе число: ");
+        double num2 = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Введите третье число: ");
+        double num3 = Convert.ToDouble(Console.ReadLine());
+
+        MathOperation min = (a, b, c) => Math.Min(Math.Min(a, b), c);
+        MathOperation max = (a, b, c) => Math.Max(Math.Max(a, b), c);
+        MathOperation sum = (a, b, c) => a + b + c;
+        MathOperation multiply = (a, b, c) => a * b * c;
+        MathOperation avg = (a, b, c) => (a + b + c) / 3;
+
+        Console.WriteLine("Минимальное число: {0}", min(num1, num2, num3));
+        Console.WriteLine("Максимальное число: {0}", max(num1, num2, num3));
+        Console.WriteLine("Сумма чисел: {0}", sum(num1, num2, num3));
+        Console.WriteLine("Произведение чисел: {0}", multiply(num1, num2, num3));
+        Console.WriteLine("Среднее арифметическое: {0}", avg(num1, num2, num3));
+
+        Console.ReadLine();
+    }
+}
