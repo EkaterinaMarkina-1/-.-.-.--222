@@ -1,0 +1,76 @@
+using System;
+
+class MyList<T>
+{
+    private T[] mass = new T[10];
+    private int count = 0;
+    public int Count
+    {
+        get { return count; }
+    }
+    public void Add(T elem)
+    {
+        if (count < mass.Length)
+        {
+            mass[count] = elem;
+        }
+        else
+        {
+            Console.WriteLine("Список заполнен");
+        }
+    }
+    public void Remove(int index)
+    {
+        if (index < 0 || index >= count)
+        {
+            Console.WriteLine("Некорректный индекс");
+        }
+        else
+        {
+            for (int i = index; i < count - 1; i++)
+            {
+                mass[i] = mass[i + 1];
+            }
+            count--;
+        }
+    }
+    public T Get(int index)
+    {
+        if (index < 0 || index >= count)
+        {
+            Console.WriteLine("Некорректный индекс");
+            return default(T);
+        }
+        else
+        {
+            return mass[index]; 
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        MyList<string> myList = new MyList<string>(); 
+        Console.WriteLine("Введите 6 строк:"); 
+        for (int i = 0; i < 6; i++)
+        {
+            string str = Console.ReadLine(); 
+            myList.Add(str); 
+        }
+        Console.WriteLine("Первый элемент списка: " + myList.Get(0));
+        Console.WriteLine("Последний элемент списка: " + myList.Get(myList.Count - 1));
+
+        Console.WriteLine("Введите индекс элемента, который нужно удалить:");
+        int index = int.Parse(Console.ReadLine());
+        myList.Remove(index);
+
+        Console.WriteLine("Оставшиеся элементы в списке:");
+        for (int i = 0; i < myList.Count; i++)
+        {
+            Console.WriteLine(myList.Get(i));
+        }
+        Console.ReadLine();
+    }
+}
