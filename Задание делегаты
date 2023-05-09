@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+
+class Car
+{
+    private string brand;
+    private string model;
+    public Car(string brand, string model)
+    {
+        this.brand = brand;
+        this.model = model;
+    }
+    public void Wash()
+    {
+        Console.WriteLine(brand + " " + model + " был помыт");
+    }
+}
+
+class Garage
+{
+    private List<Car> cars = new List<Car>();
+    public void Add(Car car)
+    {
+        cars.Add(car);
+    }
+    public void WashAllCars(Action<Car> washMethod)
+    {
+        foreach (var car in cars)
+        {
+            washMethod(car);
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Garage garage = new Garage();
+        garage.Add(new Car("Ford", "Mustang"));
+        garage.Add(new Car("BMW", "X5"));
+        garage.Add(new Car("Tesla", "Model S"));
+        garage.WashAllCars(car => car.Wash());
+
+        Console.ReadLine();
+    }
+}
