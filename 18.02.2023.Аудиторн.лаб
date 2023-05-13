@@ -1,0 +1,244 @@
+using System;
+using System.Collections.Generic;
+class Program
+{
+    class Student
+    {
+        public string fio { get; set; }
+        public int Mathematics { get; set; }
+        public int Physics { get; set; }
+        public int ComputerScience { get; set; }
+    }
+    class Teacher
+    {
+        public string fio { get; set; }
+        public string pr { get; set; }
+        public List<string> debtors { get; set; }
+    }
+    class Management
+    {
+        public string fio { get; set; }
+        public string position { get; set; }
+    }
+    class Others
+    {
+        public string fio { get; set; }
+    }
+    static void Menu()
+    {
+        Console.Clear();
+        while (true)
+        {
+            Console.WriteLine("1. Список приказов для преподавателей");
+            Console.WriteLine("2. Список приказов для студентов");
+            Console.WriteLine("3. Список преподавателей с должниками");
+            Console.WriteLine("4. Долги студента и преподаватель, который их принимает");
+
+            Console.WriteLine("Выберите действие (0 - выход):");
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 0:
+                    return;
+
+                case 1:
+                    // Список приказов для преподавателей 
+                    Console.WriteLine("Приказы для преподавателей:");
+                    foreach (Management m in managements)
+                    {
+                        Console.WriteLine($"{m.position}:");
+                        Console.WriteLine("1. Отменить занятие");
+                        Console.WriteLine("2. Назначить дополнительное занятие");
+                    }
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
+
+                case 2:
+                    // Список приказов для студентов 
+                    Console.WriteLine("Приказы для студентов:");
+                    foreach (Management m in managements)
+                    {
+                        Console.WriteLine($"{m.position}:");
+                        Console.WriteLine("1. Изменить расписание");
+                        Console.WriteLine("2. Назначить запасной экзамен");
+                    }
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
+
+                case 3:
+                    // Список преподавателей с должниками 
+                    Console.WriteLine("Преподаватели с должниками:");
+                    foreach (Teacher t in teachers)
+                    {
+                        bool hasDebtors = false;
+                        foreach (Student s in students)
+                        {
+                            switch (t.pr)
+                            {
+                                case "Математика":
+                                    if (s.Mathematics < 3)
+                                    {
+                                        if (!hasDebtors)
+                                        {
+                                            Console.WriteLine($"{t.fio}:");
+                                            hasDebtors = true;
+                                        }
+
+                                        Console.WriteLine($"- {s.fio} ({t.pr})");
+                                        t.debtors.Add(s.fio);
+                                    }
+                                    break;
+
+                                case "Физика":
+                                    if (s.Physics < 3)
+                                    {
+                                        if (!hasDebtors)
+                                        {
+                                            Console.WriteLine($"{t.fio}:");
+                                            hasDebtors = true;
+                                        }
+
+                                        Console.WriteLine($"- {s.fio} ({t.pr})");
+                                        t.debtors.Add(s.fio);
+                                    }
+                                    break;
+
+                                case "Информатика":
+                                    if (s.ComputerScience < 3)
+                                    {
+                                        if (!hasDebtors)
+                                        {
+                                            Console.WriteLine($"{t.fio}:");
+                                            hasDebtors = true;
+                                        }
+
+                                        Console.WriteLine($"- {s.fio} ({t.pr})");
+                                        t.debtors.Add(s.fio);
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
+
+                case 4:
+                    // Долги студента и преподаватель, который их принимает 
+                    Console.WriteLine("Введите ФИО студента:");
+                    string studentName = Console.ReadLine();
+
+                    foreach (Student s in students)
+                    {
+                        if (s.fio == studentName)
+                        {
+                            Console.WriteLine($"Долги студента {s.fio}:");
+
+                            bool hasDebts = false;
+                            foreach (Teacher t in teachers)
+                            {
+                                if (t.debtors.Contains(s.fio))
+                                {
+                                    Console.WriteLine($"- {t.fio} ({t.pr})");
+                                    hasDebts = true;
+                                }
+                            }
+
+                            if (!hasDebts)
+                            {
+                                Console.WriteLine("Нет долгов");
+                            }
+
+                            break;
+                        }
+                    }
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
+            }
+        }
+    }
+    static List<Student> students = new List<Student> {
+                new Student { fio = "Иванова Екатерина Семеновна", Mathematics = 3, Physics = 4, ComputerScience = 4},
+                new Student { fio = "Сидорова Ирина Олеговна",  Mathematics = 3, Physics = 4, ComputerScience = 1},
+                new Student { fio = "Петрова Ольга Антоновна",  Mathematics = 3, Physics = 4, ComputerScience = 4 },
+                new Student { fio = "Кузнецов Павел Викторович", Mathematics = 3, Physics = 2, ComputerScience = 4},
+                new Student { fio = "Пугачев Егор Федорович", Mathematics = 3, Physics = 4, ComputerScience = 4},
+                new Student { fio = "Логинов Петр Егорович", Mathematics = 2, Physics = 4, ComputerScience = 0}
+            };
+    static List<Teacher> teachers = new List<Teacher>
+        {
+            new Teacher {fio = "Григорьев Егор Львович" , pr = "Mathematics"},
+            new Teacher{fio = "Макеева Арина Борисовна" , pr = "Mathematics"},
+            new Teacher{fio = "Воронин Ярослав Кириллович" , pr = "Mathematics"},
+            new Teacher{fio = "Чистякова Софья Демидовна" , pr = "Mathematics"},
+            new Teacher{fio = "Киселева Ангелина Михайловна" , pr = "Mathematics"},
+            new Teacher{fio = "Попов Матвей Иванович" , pr = "Mathematics"},
+            new Teacher{fio = "Нестерова Александра Данииловна" , pr = "Mathematics"},
+            new Teacher{fio = "Сидорова Диана Юрьевна" , pr = "Mathematics"},
+            new Teacher{fio = "Михайлов Пётр Ярославович" , pr = "Mathematics"},
+            new Teacher{fio = "Миронова Екатерина Кирилловна" , pr = "Mathematics"},
+            new Teacher{fio = "Климов Макар Львович" , pr = "Mathematics"},
+            new Teacher{fio = "Комарова Александра Богдановна" , pr = "Mathematics"},
+            new Teacher{fio = "Громов Роман Юрьевич" , pr = "Mathematics"},
+            new Teacher{fio = "Сахарова Вероника Семёновна" , pr = "Mathematics"},
+            new Teacher{fio = "Смирнов Савелий Егорович" , pr = "Mathematics"},
+            new Teacher{fio = "Яковлева Мария Дмитриевна" , pr = "Mathematics"},
+        };
+    static List<Management> managements = new List<Management>
+        {
+            new Management{fio = "Петров Михаил Викторович", position = "декан"},
+            new Management{fio = "Иванова Екатерина Владимировна", position = "зам. декана"},
+            new Management{fio = "Сидоров Николай Геннадьевич", position = "зав. кафедрой"},
+            new Management{fio = "Лебедева Ольга Сергеевна", position = "зав. кафедрой"},
+            new Management{fio = "Степанова Татьяна Николаевна", position = "зав. кафедрой"},
+            new Management{fio = "Козлов Андрей Романович", position = "декан факультета ПИ"},
+            new Management{fio = "Соболев Николай Владимирович", position = "зам. декана факультета ПИ"},
+            new Management{fio = "Смирнов Сергей Игоревич", position = "зав. кафедрой факультета ПИ"},
+        };
+    static List<Others> others = new List<Others>
+        {
+            new Others{fio = "Сиволап Евгений Васильевич"},
+            new Others{fio = "Лесов Артур Олегович"},
+            new Others{fio = "Попов Даниил Вадимович"},
+            new Others{fio = "Костина Жанна Игоревна"},
+            new Others{fio = "Нагирняк Игорь Петрович"},
+            new Others{fio = "Макаренко Денис Олегович"},
+            new Others{fio = "Алексеев Александр Владимирович"},
+            new Others{fio = "Крылов Степан Дмитриевич"},
+            new Others{fio = "Петров Тимофей Андреевич"},
+            new Others{fio = "Соколов Никита Алексеевич"},
+        };
+
+    static void Main()
+    {
+        Console.WriteLine("Исходный полный список студентов: \n");
+        foreach (Student a in students)
+            Console.WriteLine("Ф.И.О.:" + a.fio + ",мат:" + a.Mathematics + ", физ:" + a.Physics + ", инф:" + a.ComputerScience);
+        Console.WriteLine();
+        Console.WriteLine(new String('-', 70));
+        Console.WriteLine();
+
+
+        Console.WriteLine("Исходный полный список преподавателей: \n");
+        foreach (Teacher a in teachers)
+            Console.WriteLine("Ф.И.О.:" + a.fio + ",предмет:" + a.pr);
+        Console.WriteLine();
+        Console.WriteLine(new String('-', 70));
+        Console.WriteLine();
+
+        Console.WriteLine("Исходный полный список управленцев: \n");
+        foreach (Management a in managements)
+            Console.WriteLine("Ф.И.О.:" + a.fio + ",должность" + a.position);
+        Console.WriteLine();
+        Console.WriteLine(new String('-', 70));
+        Console.WriteLine();
+
+        Console.ReadKey();
+        Menu();
+    }
+}
+
