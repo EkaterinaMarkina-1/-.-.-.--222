@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+public class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("Введите строку: ");
+        SortedSet<int> mySet = new SortedSet<int>();
+        string str = Console.ReadLine();
+        foreach (char c in str)
+        {
+            int num = Convert.ToInt32(char.GetNumericValue(c));
+            mySet.Add(num);
+        }
+        Console.WriteLine("Содержимое множества: ");
+        foreach (int item in mySet)
+        {
+            Console.WriteLine(item);
+        }
+        Console.WriteLine();
+        Console.WriteLine("1. Добавить элемент в множество");
+        Console.WriteLine("2. Удалить элемент из множества");
+        Console.WriteLine("3. Проверить, содержится ли элемент в множестве");
+        Console.WriteLine("4. Очистить множество");
+        Console.WriteLine("5. Получить количество элементов в множестве");
+        Console.WriteLine("6. Показать наименьший элемент в множестве");
+        Console.WriteLine("7. Показать наибольший элемент в множестве");
+        Console.WriteLine("8. Выйти");
+
+        Console.WriteLine("Введите номер операции: ");
+        int ch = int.Parse(Console.ReadLine());
+        switch (ch)
+        {
+            case 1:
+                Console.WriteLine("Введите элемент, который нужно добавить в множество: ");
+                int newI = int.Parse(Console.ReadLine());
+                mySet.Add(newI);
+                Console.WriteLine("Содержимое множества:");
+                foreach (int item in mySet)
+                {
+                    Console.WriteLine(item);
+                }
+                break;
+
+            case 2:
+                Console.WriteLine("Введите элемент, который нужно удалить из множества: ");
+                int toRemove = int.Parse(Console.ReadLine());
+                if (mySet.Contains(toRemove))
+                {
+                    mySet.Remove(toRemove);
+                    Console.WriteLine("Элемент удален");
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в множестве");
+                }
+                break;
+
+            case 3:
+                Console.WriteLine("Введите элемент для проверки: ");
+                int toCheck = int.Parse(Console.ReadLine());
+                if (mySet.Contains(toCheck))
+                {
+                    Console.WriteLine("Элемент найден в множестве");
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в множестве");
+                }
+                break;
+
+            case 4:
+                mySet.Clear();
+                Console.WriteLine("Множество очищено");
+                break;
+
+            case 5:
+                Console.WriteLine("Количество элементов в множестве: {0}", mySet.Count);
+                break;
+
+            case 6:
+                if (mySet.Count > 0)
+                {
+                    Console.WriteLine("Наименьший элемент в множестве: {0}", mySet.Min);
+                }
+                else
+                {
+                    Console.WriteLine("Множество пусто");
+                }
+                break;
+
+            case 7:
+                if (mySet.Count > 0)
+                {
+                    Console.WriteLine("Наибольший элемент в множестве: {0}", mySet.Max);
+                }
+                else
+                {
+                    Console.WriteLine("Множество пусто");
+                }
+                break;
+
+            case 8:
+                Console.WriteLine("Выход из программы");
+                break;
+
+            default:
+                Console.WriteLine("Неправильный выбор операции. Попробуйте еще раз");
+                break;
+        }
+    }
+}
+
