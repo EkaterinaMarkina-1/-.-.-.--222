@@ -1,0 +1,113 @@
+using System;
+using System.Collections;
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите строку: ");
+        Queue myQueue = new Queue();
+        string str = Console.ReadLine();
+        foreach (char c in str)
+        {
+            int num = Convert.ToInt32(char.GetNumericValue(c));
+            myQueue.Enqueue(num);
+        }
+        Console.WriteLine("Содержимое очереди: ");
+        foreach (int num in myQueue)
+        {
+            Console.WriteLine(num);
+        }
+        Console.WriteLine();
+        ShowMenu(myQueue);
+    }
+    static void ShowMenu(Queue myQueue)
+    {
+        Console.WriteLine("1. Добавить элемент в очередь");
+        Console.WriteLine("2. Удалить элемент из очереди");
+        Console.WriteLine("3. Показать первый элемент в очереди");
+        Console.WriteLine("4. Очистить очередь");
+        Console.WriteLine("5. Проверить, содержится ли элемент в очереди");
+        Console.WriteLine("6. Отобразить все элементы очереди");
+        Console.WriteLine("7. Отобразить количество элементов в очереди");
+        Console.WriteLine("8. Выйти");
+
+        Console.WriteLine("Введите номер операции: ");
+        int ch = int.Parse(Console.ReadLine());
+        switch (ch)
+        {
+            case 1:
+                Console.WriteLine("Введите элемент, который нужно добавить в очередь: ");
+                int newI = int.Parse(Console.ReadLine());
+                myQueue.Enqueue(newI);
+                Console.WriteLine("Содержимое очереди:");
+                foreach (int item in myQueue)
+                {
+                    Console.WriteLine(item);
+                }
+                break;
+
+            case 2:
+                if (myQueue.Count > 0)
+                {
+                    int removedItem = (int)myQueue.Dequeue();
+                    Console.WriteLine("Удаленный элемент: " + removedItem);
+                }
+                else
+                {
+                    Console.WriteLine("Очередь пуста");
+                }
+                break;
+
+            case 3:
+                if (myQueue.Count > 0)
+                {
+                    int firstItem = (int)myQueue.Peek();
+                    Console.WriteLine("Первый элемент в очереди: " + firstItem);
+                }
+                else
+                {
+                    Console.WriteLine("Очередь пуста");
+                }
+                break;
+
+            case 4:
+                myQueue.Clear();
+                Console.WriteLine("Очередь очищена");
+                break;
+
+            case 5:
+                Console.WriteLine("Введите элемент, наличие которого нужно проверить: ");
+                int i_ToCheck = int.Parse(Console.ReadLine());
+
+                if (myQueue.Contains(i_ToCheck))
+                {
+                    Console.WriteLine("Элемент найден в очереди");
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в очереди");
+                }
+                break;
+            case 6:
+                Console.WriteLine("Элементы очереди: ");
+                foreach (int item in myQueue)
+                {
+                    Console.WriteLine(item);
+                }
+                break;
+
+            case 7:
+                Console.WriteLine("Количество элементов в очереди: " + myQueue.Count);
+                break;
+
+            case 8:
+                return;
+
+            default:
+                Console.WriteLine("Неправильный ввод!");
+                break;
+        }
+        ShowMenu(myQueue);
+    }
+}
+
