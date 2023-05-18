@@ -1,0 +1,70 @@
+using System;
+using System.Linq;
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Введите элементы массива через пробел: ");
+        string input = Console.ReadLine();
+        int[] arr = input.Split(' ').Select(int.Parse).ToArray();
+
+        var pol = from n in arr
+                  where n > 0
+                  select n;
+        Console.Write("Положительные элементы: ");
+        foreach (int n in pol) Console.Write(n + " ");
+        Console.Write(" ");
+        Console.WriteLine();
+
+        var sumOtr = from n in arr
+                     where n < 0
+                     select n;
+        Console.Write("Сумма отрицательных элементов: " + sumOtr.Sum());
+        Console.WriteLine();
+
+        int x = 0;
+        var multip = from n in arr
+                     where n % 5 == 0
+                     select n;
+
+        var div_5 = from n in arr
+                    where n % 5 == 0
+                    select n;
+        Console.WriteLine("Количество элементов, которые делятся на 5 = " + div_5.ToArray().Length);
+        Console.WriteLine();
+
+        arr = arr.Where(n => n % 2 != 0).ToArray();
+        Console.WriteLine();
+        Console.WriteLine("Имененный массив:");
+        foreach (int i in arr)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine();
+
+        pol = from n in arr
+                  where n > 0
+                  select n;
+        Console.Write("Положительные элементы: ");
+        foreach (int n in pol) Console.Write(n + " ");
+        Console.Write(" ");
+        Console.WriteLine();
+
+        sumOtr = from n in arr
+                     where n < 0
+                     select n;
+        Console.Write("Сумма отрицательных элементов: " + sumOtr.Sum());
+        Console.WriteLine();
+
+        multip = from n in arr
+                     where n % 5 == 0
+                     select n;
+
+        div_5 = from n in arr
+                    where n % 5 == 0
+                    select n;
+        Console.WriteLine("Количество элементов, которые делятся на 5 = " + div_5.ToArray().Length);
+        Console.WriteLine();
+
+    }
+}
