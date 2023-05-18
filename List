@@ -1,0 +1,119 @@
+using System;
+using System.Collections.Generic;
+public class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("Введите строку: ");
+        List<int> myList = new List<int>();
+        string str = Console.ReadLine();
+        foreach (char c in str)
+        {
+            int num = Convert.ToInt32(char.GetNumericValue(c));
+            myList.Add(num);
+        }
+        Console.WriteLine("Содержимое списка: ");
+        foreach (int item in myList)
+        {
+            Console.WriteLine(item);
+        }
+        Console.WriteLine("1. Добавить элемент в список");
+        Console.WriteLine("2. Удалить элемент из списка");
+        Console.WriteLine("3. Показать элемент по индексу");
+        Console.WriteLine("4. Очистить список");
+        Console.WriteLine("5. Проверить, содержится ли элемент в списке");
+        Console.WriteLine("6. Скопировать элементы списка в массив");
+        Console.WriteLine("7. Показать количество элементов в списке");
+        Console.WriteLine("8. Получить коллекцию элементов списка");
+        Console.WriteLine("9. Выйти");
+
+        Console.WriteLine("Введите номер операции: ");
+        int ch = int.Parse(Console.ReadLine());
+        switch (ch)
+        {
+            case 1:
+                Console.WriteLine("Введите элемент, который нужно добавить в список: ");
+                int newI = int.Parse(Console.ReadLine());
+                myList.Add(newI);
+                Console.WriteLine("Содержимое списка:");
+                foreach (int item in myList)
+                {
+                    Console.WriteLine(item);
+                }
+                break;
+
+            case 2:
+                Console.WriteLine("Введите элемент, который нужно удалить из списка: ");
+                int toRemove = int.Parse(Console.ReadLine());
+                if (myList.Contains(toRemove))
+                {
+                    myList.Remove(toRemove);
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в списке");
+                }
+                break;
+
+            case 3:
+                Console.WriteLine("Введите индекс элемента: ");
+                int index = int.Parse(Console.ReadLine());
+                if (index >= 0 && index < myList.Count)
+                {
+                    int element = myList[index];
+                    Console.WriteLine("Элемент с индексом {0}: {1}", index, element);
+                }
+                else
+                {
+                    Console.WriteLine("Индекс за пределами диапазона списка");
+                }
+                break;
+
+            case 4:
+                myList.Clear();
+                Console.WriteLine("Список очищен");
+                break;
+
+            case 5:
+                Console.WriteLine("Введите элемент для проверки: ");
+                int toCheck = int.Parse(Console.ReadLine());
+                if (myList.Contains(toCheck))
+                {
+                    Console.WriteLine("Элемент найден в списке");
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в списке");
+                }
+                break;
+
+            case 6:
+                int[] myArray = new int[myList.Count];
+                myList.CopyTo(myArray);
+                Console.WriteLine("Содержимое массива:");
+                foreach (int element in myArray)
+                {
+                    Console.WriteLine(element);
+                }
+                break;
+
+            case 7:
+                Console.WriteLine("Количество элементов в списке: {0}", myList.Count);
+                break;
+
+            case 8:
+                Console.WriteLine("Содержимое списка:");
+                foreach (int element in myList)
+                {
+                    Console.WriteLine(element);
+                }
+                break;
+            case 9:
+                return;
+
+            default:
+                Console.WriteLine("Неправильный ввод!");
+                break;
+        }
+    }
+}
