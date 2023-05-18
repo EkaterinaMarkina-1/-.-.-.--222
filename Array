@@ -1,0 +1,121 @@
+using System;
+using System.Linq;
+public class Program
+{
+    public static void Values(Array myArr)
+    {
+        System.Collections.IEnumerator myEnumerator = myArr.GetEnumerator();
+        Console.WriteLine("Массив :");
+        while (myEnumerator.MoveNext())
+        {
+            Console.Write("\t{0}", myEnumerator.Current);
+        }
+        Console.WriteLine();
+    }
+    public static void Main()
+    {
+        Console.WriteLine("Введите количество элементов массива");
+        int length = int.Parse(Console.ReadLine());
+
+        int[] array = new int[length];
+
+        Console.WriteLine("Введите элементы массива:");
+
+        for (int i = 0; i < length; i++)
+        {
+            array[i] = int.Parse(Console.ReadLine());
+        }
+        Console.WriteLine();
+        Console.WriteLine("1. Сортировка по возрастанию");
+        Console.WriteLine("2. Сортировка по убыванию");
+        Console.WriteLine("3. Нахождение максимального элемента");
+        Console.WriteLine("4. Нахождение минимального элемента");
+        Console.WriteLine("5. Поиск элемента в массиве");
+        Console.WriteLine("6. Удаление элемента из массива");
+        Console.WriteLine("7. Вставка элемента в массив");
+        Console.WriteLine("8. Очистка массива");
+        Console.WriteLine("9. Количество элементов в массиве");
+        Console.WriteLine("10. Выйти");
+
+        Console.WriteLine("Введите номер операции: ");
+        int ch = int.Parse(Console.ReadLine());
+        switch (ch)
+        {
+            case 1:
+                Array.Sort(array);
+                Console.WriteLine("Массив отсортирован по возрастанию:");
+                Values(array);
+                break;
+
+            case 2:
+                Array.Sort(array);
+                Array.Reverse(array);
+                Console.WriteLine("Массив отсортирован по убыванию:");
+                Values(array);
+
+                break;
+            case 3:
+                int max = array.Max();
+                Console.WriteLine("Максимальный элемент массива: {0}", max);
+                break;
+
+            case 4:
+                int min = array.Min();
+                Console.WriteLine("Минимальный элемент массива: {0}", min);
+                break;
+
+            case 5:
+                Console.WriteLine("Введите элемент для поиска:");
+                int search = int.Parse(Console.ReadLine());
+                bool contains = array.Contains(search);
+                if (contains)
+                {
+                    Console.WriteLine("Элемент найден в массиве.");
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в массиве.");
+                }
+                break;
+
+            case 6:
+                Console.WriteLine("Введите индекс элемента для удаления:");
+                int index = int.Parse(Console.ReadLine());
+                array = array.Where((source, ind) => ind != index).ToArray();
+                Console.WriteLine("Элемент удален из массива.");
+                Values(array);
+                break;
+
+            case 7:
+                Console.WriteLine("Введите индекс для вставки элемента:");
+                int insertIndex = int.Parse(Console.ReadLine());
+                Console.WriteLine("Введите значение элемента:");
+                int insertValue = int.Parse(Console.ReadLine());
+                int[] newArray = new int[length + 1];
+                Array.Copy(array, 0, newArray, 0, insertIndex);
+                newArray[insertIndex] = insertValue;
+                Array.Copy(array, insertIndex, newArray, insertIndex + 1, length - insertIndex);
+                Console.WriteLine("Элемент вставлен в массив.");
+                Values(array);
+                break;
+
+            case 8:
+                Array.Clear(array, 0, array.Length);
+                Console.WriteLine("Массив очищен:");
+                Values(array);
+                break;
+
+            case 9:
+                Console.WriteLine("Количество элементов в массиве: {0}", array.Length);
+                break;
+
+            case 10:
+                Console.WriteLine("Выход из программы");
+                break;
+
+            default:
+                Console.WriteLine("Неправильный выбор операции. Попробуйте еще раз");
+                break;
+        }
+    }
+}
