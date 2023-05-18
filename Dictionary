@@ -1,0 +1,144 @@
+using System;
+using System.Collections.Generic;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("Введите строку: ");
+        Dictionary<int, int> myDictionary = new Dictionary<int, int>();
+        string str = Console.ReadLine();
+        foreach (char c in str)
+        {
+            int num = Convert.ToInt32(char.GetNumericValue(c));
+            myDictionary.Add(num, num);
+        }
+        Console.WriteLine("Содержимое словаря: ");
+        foreach (KeyValuePair<int, int> item in myDictionary)
+        {
+            Console.WriteLine(item.Key);
+        }
+        Console.WriteLine();
+        Console.WriteLine("1. Добавить элемент в словарь");
+        Console.WriteLine("2. Удалить элемент из словаря");
+        Console.WriteLine("3. Показать элемент по ключу");
+        Console.WriteLine("4. Очистить словарь");
+        Console.WriteLine("5. Проверить, содержится ли ключ в словаре");
+        Console.WriteLine("6. Скопировать элементы словаря в массив");
+        Console.WriteLine("7. Показать количество элементов в словаре");
+        Console.WriteLine("8. Проверить наличие значения в словаре");
+        Console.WriteLine("9. Получить коллекцию ключей словаря");
+        Console.WriteLine("10. Выйти");
+
+        Console.WriteLine("Введите номер операции: ");
+        int ch = int.Parse(Console.ReadLine());
+        switch (ch)
+        {
+            case 1:
+                Console.WriteLine("Введите элемент, который нужно добавить в словарь: ");
+                int newI = int.Parse(Console.ReadLine());
+                myDictionary.Add(newI, newI);
+                Console.WriteLine("Содержимое словаря:");
+                foreach (KeyValuePair<int, int> item in myDictionary)
+                {
+                    Console.WriteLine(item.Key);
+                }
+                break;
+
+            case 2:
+                Console.WriteLine("Введите элемент, который нужно удалить из словаря: ");
+                int toRemove = int.Parse(Console.ReadLine());
+                if (myDictionary.ContainsKey(toRemove))
+                {
+                    myDictionary.Remove(toRemove);
+                    Console.WriteLine("Элемент удален");
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в словаре");
+                }
+                break;
+
+            case 3:
+                Console.WriteLine("Введите ключ элемента, который нужно показать: ");
+                int keyToShow = int.Parse(Console.ReadLine());
+                if (myDictionary.ContainsKey(keyToShow))
+                {
+                    int value = myDictionary[keyToShow];
+                    Console.WriteLine("Значение элемента по ключу " + keyToShow + ": " + value);
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в словаре");
+                }
+                break;
+
+            case 4:
+                myDictionary.Clear();
+                Console.WriteLine("Словарь очищен");
+                break;
+
+            case 5:
+                Console.WriteLine("Введите ключ, наличие которого нужно проверить: ");
+                int keyToCheck = int.Parse(Console.ReadLine());
+
+                if (myDictionary.ContainsKey(keyToCheck))
+                {
+                    Console.WriteLine("Ключ найден в словаре");
+                }
+                else
+                {
+                    Console.WriteLine("Ключ не найден в словаре");
+                }
+                break;
+
+            case 6:
+                int[] dictionaryArray = new int[myDictionary.Count];
+                myDictionary.Keys.CopyTo(dictionaryArray, 0);
+                Console.WriteLine("Элементы словаря: ");
+
+                for (int i = 0; i < dictionaryArray.Length; i++)
+                {
+                    Console.WriteLine(dictionaryArray[i]);
+                }
+                break;
+
+            case 7:
+                Console.WriteLine("Показать количество элементов в словаре");
+                int count = myDictionary.Count;
+                Console.WriteLine("Количество элементов в словаре: " + count);
+                break;
+
+            case 8:
+                Console.WriteLine("Проверить наличие значения в словаре");
+                Console.WriteLine("Введите значение, которое нужно проверить: ");
+                int valueToCheck = int.Parse(Console.ReadLine());
+                if (myDictionary.ContainsValue(valueToCheck))
+                {
+                    Console.WriteLine("Значение найдено в словаре");
+                }
+                else
+                {
+                    Console.WriteLine("Значение не найдено в словаре");
+                }
+                break;
+
+            case 9:
+                Console.WriteLine("Получить коллекцию ключей словаря");
+                ICollection<int> keys = myDictionary.Keys;
+                Console.WriteLine("Коллекция ключей: ");
+                foreach (int key in keys)
+                {
+                    Console.WriteLine(key);
+                }
+                break;
+            case 10:
+                return;
+
+            default:
+                Console.WriteLine("Неправильный ввод!");
+                break;
+        }
+    }
+}
+
