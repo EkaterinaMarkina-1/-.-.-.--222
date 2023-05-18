@@ -1,0 +1,123 @@
+using System;
+using System.Collections;
+public class Program
+{
+    public static void PrintArrayList(ArrayList list)
+    {
+        foreach (var item in list)
+        {
+            Console.Write("{0}\t", item);
+        }
+        Console.WriteLine();
+    }
+    public static void Main()
+    {
+        ArrayList list = new ArrayList();
+
+        Console.WriteLine("Введите элементы в список (для окончания введите в отдельной строке 0):");
+
+        int input;
+        while ((input = int.Parse(Console.ReadLine())) != 0)
+        {
+            list.Add(input);
+        }
+
+        Console.WriteLine(" Выберите метод для применения над списком:");
+        Console.WriteLine("1. Сортировка по возрастанию");
+        Console.WriteLine("2. Сортировка по убыванию");
+        Console.WriteLine("3. Нахождение максимального элемента");
+        Console.WriteLine("4. Нахождение минимального элемента");
+        Console.WriteLine("5. Поиск элемента в списке");
+        Console.WriteLine("6. Удаление элемента из списка");
+        Console.WriteLine("7. Вставка элемента в список");
+        Console.WriteLine("8. Очистка списка");
+        Console.WriteLine("9. Количество элементов в списке");
+        Console.WriteLine("10. Обратное направление элементов списка");
+        Console.WriteLine("11. Выйти");
+        int choice = int.Parse(Console.ReadLine());
+
+        switch (choice)
+        {
+            case 1:
+                list.Sort();
+                Console.WriteLine("Список отсортирован по возрастанию:");
+                PrintArrayList(list);
+                break;
+            case 2:
+                list.Sort();
+                list.Reverse();
+                Console.WriteLine("Список отсортирован по убыванию:");
+                PrintArrayList(list);
+                break;
+            case 3:
+                int max = (int)list[0];
+                foreach (var item in list)
+                {
+                    if ((int)item > max)
+                    {
+                        max = (int)item;
+                    }
+                }
+                Console.WriteLine("Максимальный элемент списка: {0}", max);
+                break;
+            case 4:
+                int min = (int)list[0];
+                foreach (var item in list)
+                {
+                    if ((int)item < min)
+                    {
+                        min = (int)item;
+                    }
+                }
+                Console.WriteLine("Минимальный элемент списка: {0}", min);
+                break;
+            case 5:
+                Console.WriteLine("Введите элемент для поиска:");
+                int search = int.Parse(Console.ReadLine());
+                if (list.Contains(search))
+                {
+                    Console.WriteLine("Элемент найден в списке.");
+                }
+                else
+                {
+                    Console.WriteLine("Элемент не найден в списке.");
+                }
+                break;
+            case 6:
+                Console.WriteLine("Введите индекс элемента для удаления:");
+                int index = int.Parse(Console.ReadLine());
+                list.RemoveAt(index);
+                Console.WriteLine("Элемент удален из списка.");
+                PrintArrayList(list);
+                break;
+            case 7:
+                Console.WriteLine("Введите индекс для вставки элемента:");
+                int insertIndex = int.Parse(Console.ReadLine());
+                Console.WriteLine("Введите значение элемента:");
+                int insertValue = int.Parse(Console.ReadLine());
+                list.Insert(insertIndex, insertValue);
+                Console.WriteLine("Элемент вставлен в список.");
+                PrintArrayList(list);
+                break;
+            case 8:
+                list.Clear();
+                Console.WriteLine("Список очищен:");
+                PrintArrayList(list);
+                break;
+            case 9:
+                Console.WriteLine("Количество элементов в списке: {0}", list.Count);
+                break;
+            case 10:
+                list.Reverse();
+                Console.WriteLine("Элементы списка развернуты в обратном направлении:");
+                PrintArrayList(list);
+                break;
+            case 11:
+                return;
+            default:
+                Console.WriteLine("Выбран неверный вариант.");
+                break;
+        }
+        Console.ReadKey();
+    }
+}
