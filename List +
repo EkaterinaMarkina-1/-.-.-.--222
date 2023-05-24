@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+
+public class ListMethods
+{
+    static List<string> myList = new List<string>();
+
+    public static void Main()
+    {
+        Console.WriteLine("1. Добавить элемент в список");
+        Console.WriteLine("2. Удалить элемент из списка");
+        Console.WriteLine("3. Найти индекс элемента в списке");
+        Console.WriteLine("4. Очистить список");
+        Console.WriteLine("5. Проверить наличие элемента в списке");
+        Console.WriteLine("6. Скопировать элементы списка в массив");
+        Console.WriteLine("7. Показать количество элементов в списке");
+        Console.WriteLine("8. Соединить элементы списка в строку");
+        Console.WriteLine("9. Разделить строку на элементы списка");
+        Console.WriteLine("10. Выйти");
+
+        bool isRunning = true;
+
+        while (isRunning)
+        {
+            Console.WriteLine("Введите номер операции: ");
+            int ch = int.Parse(Console.ReadLine());
+            switch (ch)
+            {
+                case 1:
+                    Console.WriteLine("Введите строку, которую нужно добавить в список: ");
+                    string newStr = Console.ReadLine();
+                    myList.Add(newStr);
+                    Console.WriteLine("Содержимое списка:");
+                    foreach (string item in myList)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    break;
+
+                case 2:
+                    Console.WriteLine("Введите индекс элемента, который нужно удалить: ");
+                    int indexToRemove = int.Parse(Console.ReadLine());
+                    if (indexToRemove >= 0 && indexToRemove < myList.Count)
+                    {
+                        myList.RemoveAt(indexToRemove);
+                        Console.WriteLine("Элемент удален");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Индекс за пределами списка");
+                    }
+                    break;
+
+                case 3:
+                    Console.WriteLine("Введите значение элемента, индекс которого нужно найти: ");
+                    string elementToFind = Console.ReadLine();
+                    int index = myList.IndexOf(elementToFind);
+                    if (index >= 0)
+                    {
+                        Console.WriteLine("Индекс элемента: {0}", index);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Элемент не найден в списке");
+                    }
+                    break;
+
+                case 4:
+                    myList.Clear();
+                    Console.WriteLine("Список очищен");
+                    break;
+
+                case 5:
+                    Console.WriteLine("Введите элемент, который нужно проверить на наличие в списке: ");
+                    string checkItem = Console.ReadLine();
+                    if (myList.Contains(checkItem))
+                    {
+                        Console.WriteLine("Элемент найден в списке");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Элемент не найден в списке");
+                    }
+                    break;
+
+                case 6:
+                    string[] arr = myList.ToArray();
+                    Console.WriteLine("Элементы списка скопированы в массив: ");
+                    foreach (string i in arr)
+                    {
+                        Console.WriteLine(i);
+                    }
+                    break;
+
+                case 7:
+                    Console.WriteLine("Количество элементов в списке: {0}", myList.Count);
+                    break;
+
+                case 8:
+                    string joinedStr = string.Join(", ", myList);
+                    Console.WriteLine("Элементы списка соединены в строку: {0}", joinedStr);
+                    break;
+
+                case 9:
+                    Console.WriteLine("Введите строку, которую нужно разделить на элементы списка: ");
+                    string strToSplit = Console.ReadLine();
+                    string[] splitArray = strToSplit.Split(' ');
+                    myList.AddRange(splitArray);
+                    Console.WriteLine("Содержимое списка:");
+                    foreach (string item in myList)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    break;
+
+                case 10:
+                    Console.WriteLine("Выход из программы");
+                    isRunning = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Неправильный ввод!");
+                    break;
+
+            }
+        }
+    }
+}
