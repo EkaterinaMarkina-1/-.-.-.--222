@@ -1,0 +1,52 @@
+using System.Collections.Generic;
+using System;
+
+delegate void EventHandler(int a, int b);
+
+class EventManager
+{
+    public event EventHandler Event;
+    private List<EventHandler> handlers = new List<EventHandler>();
+
+    public void AddHandler(EventHandler handler)
+    {
+        handlers.Add(handler);
+    }
+    public void RemoveHandler(EventHandler handler)
+    {
+        handlers.Remove(handler);
+    }
+
+    public void RaiseEvent(int a, int b)
+    {
+        foreach (var handler in handlers)
+        {
+            handler(a, b);
+        }
+
+        if (Event != null)
+        {
+            Event(a, b);
+        }
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        EventManager manager = new EventManager();
+        manager.AddHandler((a, b) => Console.WriteLine($"{a} + {b} = {a + b}"));
+        manager.AddHandler((a, b) => Console.WriteLine($"{a} - {b} = {a - b}"));
+        manager.AddHandler((a, b) => Console.WriteLine($"{a} * {b} = {a * b}"));
+        manager.AddHandler((a, b) => Console.WriteLine($"{a} / {b} = {(b != 0 ? a / b : 0)}"));
+
+        Console.Write("Введите первое число: ");
+        int myA = int.Parse(Console.ReadLine());
+        Console.Write("Введите второе число: ");
+        int myB = int.Parse(Console.ReadLine());
+
+        manager.RaiseEvent(myA, myB);
+
+        Console.ReadKey();
+    }
+}
