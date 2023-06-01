@@ -1,0 +1,146 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Car
+{
+    public int Id { get; set; }
+    public string Model { get; set; }
+    public int DriverId { get; set; }
+}
+
+class Driver
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public char Initial { get { return Name.ToUpper()[0]; } }
+    public int CarId { get; set; }
+}
+
+class Program
+{
+    static List<Car> cars = new List<Car>()
+    {
+        new Car() { Id = 1, Model = "Volvo", DriverId = 1 },
+        new Car() { Id = 2, Model = "Mercedes", DriverId = 3 },
+        new Car() { Id = 3, Model = "BMW", DriverId = 2 },
+        new Car() { Id = 4, Model = "Toyota", DriverId = 2 },
+        new Car() { Id = 5, Model = "Ford", DriverId = 1 },
+        new Car() { Id = 6, Model = "Audi", DriverId = 4 },
+        new Car() { Id = 7, Model = "Jeep", DriverId = 5 },
+        new Car() { Id = 8, Model = "Honda", DriverId = 6 },
+        new Car() { Id = 9, Model = "Nissan", DriverId = 7 },
+        new Car() { Id = 10, Model = "Mitsubishi", DriverId = 8 },
+        new Car() { Id = 11, Model = "Subaru", DriverId = 4 },
+        new Car() { Id = 12, Model = "Citroen", DriverId = 9 },
+        new Car() { Id = 13, Model = "Peugeot", DriverId = 10 },
+        new Car() { Id = 14, Model = "Renault", DriverId = 11 },
+        new Car() { Id = 15, Model = "Fiat", DriverId = 12 }
+    };
+    
+    static List<Driver> drivers = new List<Driver>()
+    {
+        new Driver() { Id = 1, Name = "Smith", CarId = 1 },
+        new Driver() { Id = 2, Name = "Johnson", CarId = 3 },
+        new Driver() { Id = 3, Name = "Brown", CarId = 2 },
+        new Driver() { Id = 4, Name = "White", CarId = 4 },
+        new Driver() { Id = 5, Name = "Wilson", CarId = 5 },
+        new Driver() { Id = 6, Name = "Martin", CarId = 8 },
+        new Driver() { Id = 7, Name = "Anderson", CarId = 9 },
+        new Driver() { Id = 8, Name = "Taylor", CarId = 10 },
+        new Driver() { Id = 9, Name = "Davis", CarId = 12 },
+        new Driver() { Id = 10, Name = "Miller", CarId = 13 },
+        new Driver() { Id = 11, Name = "Jackson", CarId = 14 },
+        new Driver() { Id = 12, Name = "Carter", CarId = 15 },
+        new Driver() { Id = 13, Name = "Williams", CarId = 7 },
+        new Driver() { Id = 14, Name = "Garcia", CarId = 8 },
+        new Driver() { Id = 15, Name = "Jones", CarId = 4 }
+    };
+
+    static void Main(string[] args)
+    {
+        while (true)
+        {
+            Console.WriteLine("Меню:");
+            Console.WriteLine("1. Сгруппировать данные по машине");
+            Console.WriteLine("2. Сгруппировать данные по владельцу");
+            Console.WriteLine("3. Выбрать водителей фамилии которых начинаются с заданной буквы");
+            Console.WriteLine("0. Выход");
+            Console.Write("Выберите пункт меню: ");
+            string choice = Console.ReadLine();
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    GroupByCar();
+                    break;
+                case "2":
+                    GroupByDriver();
+                    break;
+                case "3":
+                    SelectByInitial();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Недопустимый пункт меню");
+                    break;
+            }
+
+            Console.WriteLine();
+        }
+    }
+
+    static void GroupByCar()
+    {
+        Console.WriteLine("Введите название машины:");
+        string carName = Console.ReadLine();
+        var query = cars.Where(car => car.Model == carName)
+                        .GroupJoin(drivers,
+                                   car => car.Id,
+                                   driver => driver.CarId,
+                                   (car, drivers) => new { Car = car, Drivers = drivers })
+                        .OrderBy(item => item.Car.Model);
+        foreach (var item in query)
+        {
+            Console.WriteLine("Машина {0}:", item.Car.Model);
+            foreach (var driver in item.Drivers)
+            {
+                Console.WriteLine("- {0}", driver.Name);
+            }
+        }
+    }
+    static void GroupByDriver()
+    {
+        Console.WriteLine("Введите имя водителя:");
+        string driverName = Console.ReadLine();
+        var query = drivers.Where(driver => driver.Name == driverName)
+                           .GroupJoin(cars,
+                                      driver => driver.Id,
+                                      car => car.DriverId,
+                                      (driver, cars) => new { Driver = driver, Cars = cars })
+                           .OrderBy(item => item.Driver.Name);
+        foreach (var item in query)
+        {
+            Console.WriteLine("Водитель {0}:", item.Driver.Name);
+            foreach (var car in item.Cars)
+            {
+                Console.WriteLine("- {0}", car.Model);
+            }
+        }
+    }
+
+    static void SelectByInitial()
+    {
+        Console.Write("Введите букву: ");
+        char initial = Console.ReadLine().ToUpper()[0];
+        Console.WriteLine();
+
+        var query = drivers.Where(driver => driver.Initial == initial)
+            .OrderBy(driver => driver.Name);
+
+        foreach (var driver in query)
+            Console.WriteLine("- {0}", driver.Name);
+    }
+}
